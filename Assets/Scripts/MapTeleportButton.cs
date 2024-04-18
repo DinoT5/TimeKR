@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MapTeleportButton : MonoBehaviour
+public class MapTeleportButton : CurrencyDependent
 {
     // Start is called before the first frame update
 
@@ -11,7 +9,8 @@ public class MapTeleportButton : MonoBehaviour
     public string sceneToLoad;
     public GameObject MapPanel;
     [SerializeField] private ScreenFader _fader;
-
+    [SerializeField] private int TravelCost;
+    [SerializeField] private CurrencyUICounter CostCounter;
 
 
     public Transform Player;
@@ -21,24 +20,44 @@ public class MapTeleportButton : MonoBehaviour
        
         GameObject player = GameObject.FindWithTag("Player");
         Player = Player.transform;
+        if (CostCounter != null)
+        {
+            CostCounter.TotalCurrency = TravelCost;
+        }
+
     }
 
     public void Teleport()
     {
-        
-        Player.gameObject.transform.position = teleportLocation;
+        if (_TotalCurrency >= TravelCost)
+        {
+            Actions.OrderCurrencyUpdate.InvokeAction(-TravelCost);
+            Player.gameObject.transform.position = teleportLocation;
 
-        _fader.FadeFromBlack(4f,FinishedFadingFromBlack);
-        MapPanel.SetActive(false);
+            _fader.FadeFromBlack(4f, FinishedFadingFromBlack);
+            MapPanel.SetActive(false);
+        }
+        else
+        {
+            //Can call an action here if we want to play an effect somewhere else to show u got no funds
+        }
 
     }
     public void TeleportScene()
     {
-        PlayerPrefs.SetFloat("TeleportX", teleportLocation.x);
-        PlayerPrefs.SetFloat("TeleportY", teleportLocation.y);
-        PlayerPrefs.SetFloat("TeleportZ", teleportLocation.z);
 
-        SceneManager.LoadScene(sceneToLoad);
+        if (_TotalCurrency >= TravelCost)
+        {
+            PlayerPrefs.SetFloat("TeleportX", teleportLocation.x);
+            PlayerPrefs.SetFloat("TeleportY", teleportLocation.y);
+            PlayerPrefs.SetFloat("TeleportZ", teleportLocation.z);
+
+            SceneManager.LoadScene(sceneToLoad);
+        }
+        else
+        {
+            //Can call an action here if we want to play an effect somewhere else to show u got no funds
+        }
     }
     
     public void CloseMap()
