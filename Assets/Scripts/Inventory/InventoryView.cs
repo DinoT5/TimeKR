@@ -34,7 +34,15 @@ public class InventoryView : MonoBehaviour
 
     public void UseItem()
     {
-        EventBus.Instance.UseItem(_currentSlot.itemData);
+        _fader.FadeFromBlack(1f,FadeToUseItemCallback);
+
+    }
+    public void FadeToUseItemCallback()
+    {
+        _contextMenuObject.SetActive(false);
+        //_inventoryViewObject.SetActive(false);
+        _fader.FadeFromBlack(1f, () => EventBus.Instance.UseItem(_currentSlot.itemData));
+        //_state = State.menuClosed;
     }
     public void OnSlotSelected(ItemSlot selectedSlot)
     {
@@ -116,6 +124,7 @@ public class InventoryView : MonoBehaviour
                 }
             }
         }
+
 
     }
 

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance { get; private set; }
+    
     public float speed = 5.0f;
 
     public Rigidbody playerRb;
@@ -14,7 +16,10 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;
     public bool canMove;
 
-
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Update is called once per frame
     void Start()
     {

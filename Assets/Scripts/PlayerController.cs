@@ -24,14 +24,14 @@ public class PlayerController : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventBus.Instance.onOpenInventory += () => canMove = true;
-        EventBus.Instance.onCloseInventory += () => canMove = false;
+        EventBus.Instance.onGameplayPaused += () => canMove = true;
+        EventBus.Instance.onGameplayResumed += () => canMove = false;
 
     }
     private void OnDisable()
     {
-        EventBus.Instance.onOpenInventory -= () => canMove = true;
-        EventBus.Instance.onCloseInventory -= () => canMove = false;
+        EventBus.Instance.onGameplayPaused -= () => canMove = true;
+        EventBus.Instance.onGameplayResumed -= () => canMove = false;
     }
 
     // Update is called once per frame
