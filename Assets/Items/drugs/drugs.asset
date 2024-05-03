@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00c35c4713fb8f341848ce76c84c7a38, type: 3}
+  m_Name: drugs
+  m_EditorClassIdentifier: 
+  _name: drugs
+  _description: []
+  _sprite: {fileID: 2706707306615119969, guid: e26d0b5826e1b2b43b1753fa5d7ac75b, type: 3}

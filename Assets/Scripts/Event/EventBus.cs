@@ -15,7 +15,9 @@ public class EventBus : MonoBehaviour
 
     public event Action onGameplayResumed;
 
-    public event Action<ItemData> onItemUsed;
+    public event Action<ItemData> onItemUsed; 
+
+    public event Action<ItemData> onItemDropped;
 
 
     public void OpenInventory()
@@ -48,5 +50,9 @@ public class EventBus : MonoBehaviour
     public void UseItem(ItemData item)
     {
         onItemUsed?.Invoke(item);
+    }
+    public void DropItem(ItemData item)
+    {
+        //onItemDropped.
     }
 }

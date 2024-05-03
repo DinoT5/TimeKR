@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 802341614380529768}
   - component: {fileID: 802341614380529771}
   - component: {fileID: 802341614380529770}
+  - component: {fileID: 6030247518323652819}
   m_Layer: 0
   m_Name: Dantes
   m_TagString: Untagged
@@ -107,6 +108,7 @@ MonoBehaviour:
   speed: 5
   playerRb: {fileID: 802341614380529769}
   animator: {fileID: 802341614380529771}
+  canMove: 0
 --- !u!114 &802341614380529773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +129,7 @@ MonoBehaviour:
   rb: {fileID: 802341614380529769}
   sr: {fileID: 802341614380529767}
   animator: {fileID: 802341614380529771}
+  canMove: 0
 --- !u!54 &802341614380529769
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -186,6 +189,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1b2d9fb765a81a4793cdc99162b9594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6030247518323652819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802341614380529762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baeb7f23bed7b8842b47e7848eeab212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &802341615587825509

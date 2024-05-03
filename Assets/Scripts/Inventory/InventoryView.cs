@@ -14,14 +14,34 @@ public class InventoryView : MonoBehaviour
     [SerializeField] private PlayerController _characterMove;
     
     [SerializeField] private List<ItemSlot> _slots;
+
     [SerializeField] private ItemSlot _currentSlot;
+    
     [SerializeField] private ScreenFader _fader;
+    
     [SerializeField] private  GameObject _contextMenuObject;
     [SerializeField] private GameObject _firstContextMenuOption;
 
     [SerializeField] private List<Button> _contextMenuIgnore;
 
 
+    private void Start()
+    {
+        _slots[0].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[0]);
+        _slots[1].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[1]);
+        _slots[2].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[2]);
+        _slots[3].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[3]);
+        _slots[4].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[4]);
+        _slots[5].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[5]);
+        _slots[6].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[6]);
+        _slots[7].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[7]);
+        _slots[8].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[8]);
+        _slots[9].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[9]);
+        /*        for (int i = 0; i < _slots.Count; i++)
+                {
+                    _slots[i].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[i]);
+                }*/
+    }
     private enum State
     {
         menuClosed,
@@ -34,27 +54,17 @@ public class InventoryView : MonoBehaviour
 
     public void UseItem()
     {
+        Debug.Log(_currentSlot);
         _fader.FadeFromBlack(1f,FadeToUseItemCallback);
 
     }
-    public void FadeToUseItemCallback()
+
+    private void FadeToUseItemCallback()
     {
         _contextMenuObject.SetActive(false);
         //_inventoryViewObject.SetActive(false);
         _fader.FadeFromBlack(1f, () => EventBus.Instance.UseItem(_currentSlot.itemData));
         //_state = State.menuClosed;
-    }
-    public void OnSlotSelected(ItemSlot selectedSlot)
-    {
-        _currentSlot = selectedSlot;
-        if (selectedSlot.itemData == null)
-        {
-            _itemNameText.ClearMesh();
-            _itemDescriptionText.ClearMesh();
-            return; 
-        }
-        _itemNameText.SetText(selectedSlot.itemData.Name);
-        _itemDescriptionText.SetText(selectedSlot.itemData.Description[0]);
     }
 
     private void OnEnable()
@@ -75,6 +85,20 @@ public class InventoryView : MonoBehaviour
                 break;
             }
         }
+    }
+    public void OnSlotSelected(ItemSlot selectedSlot)
+    {
+
+        _currentSlot = selectedSlot;
+        if (selectedSlot.itemData == null)
+        {
+            
+            _itemNameText.ClearMesh();
+            _itemDescriptionText.ClearMesh();
+            return; 
+        }
+        _itemNameText.SetText(selectedSlot.itemData.Name);
+        _itemDescriptionText.SetText(selectedSlot.itemData.Description[0]);
     }
 
 

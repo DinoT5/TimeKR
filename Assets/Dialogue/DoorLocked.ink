@@ -1,0 +1,1 @@
+The door seems to be locked,I should look somewhere else #speaker:Dantes #portrait:dantes_neutral #layout:left

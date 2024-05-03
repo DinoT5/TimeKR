@@ -6,9 +6,7 @@ using UnityEngine.EventSystems;
 public class SelectorView : MonoBehaviour
 {
     [SerializeField] private float _speed = 25f;
-    
     private RectTransform _rectTransform;
-
     private GameObject _selected;
     
     void Awake()

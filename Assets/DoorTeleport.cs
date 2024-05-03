@@ -34,11 +34,14 @@ public class DoorTeleport : MonoBehaviour
         if (_teleportDestination != null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
+            GameObject mainCamera = Camera.main.gameObject;
+            if (player != null && mainCamera != null)
             {
                 Vector3 offset = _teleportDestination.position - player.transform.position;
 
                 player.transform.position += offset;
+
+                mainCamera.transform.position += offset;
             }
             else
             {
@@ -52,13 +55,19 @@ public class DoorTeleport : MonoBehaviour
     }
     private void FinishedFadingToBlack()
     {
-        _fader.FadeToBlack(1f, FinishedFadingFromBlack);
-        TeleportPlayer();
+        _fader.FadeToBlack(2f, FinishedFadingFromBlack);
+        
 
     }
     private void FinishedFadingFromBlack()
     {
-        _fader.FadeFromBlack(3f, null);
+        TeleportPlayer();
+        _fader.FadeFromBlack(2f, null);
+
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        visualCue.SetActive(false);
 
     }
 }

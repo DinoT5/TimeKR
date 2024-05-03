@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Key
   _description:
-  - Key
-  _sprite: {fileID: 0}
+  - A Key
+  _sprite: {fileID: 5765120977158450369, guid: 16d58c57ebe254b42ac9fedef36ac097, type: 3}

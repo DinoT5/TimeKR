@@ -28,12 +28,15 @@ public class StartDoorInteraction : MonoBehaviour
     }
     private void OnItemUsed(ItemData item)
     {
+        
         if (Vector3.Distance(PlayerMovement.Instance.transform.position, transform.position) < 3)
         {
 
             if (item == _requiredItem)
             {
-                _fader.FadeToBlack(1f, FinishedFadingToBlack);
+
+                DialoguePrinter.Instance.PrintDialogueLine("You used the Axe on the Door", 0.06f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
+
 
             }
         }
@@ -43,11 +46,14 @@ public class StartDoorInteraction : MonoBehaviour
         if (_teleportDestination != null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
+            GameObject mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            if (player != null && mainCamera != null)
             {
                 Vector3 offset = _teleportDestination.position - player.transform.position;
 
                 player.transform.position += offset;
+
+                mainCamera.transform.position += offset;
             }
             else
             {
@@ -64,14 +70,13 @@ public class StartDoorInteraction : MonoBehaviour
     }
     private void FinishedFadingToBlack()
     {
-        _fader.FadeToBlack(1f, FinishedFadingFromBlack);
-        TeleportPlayer();
-
-
+        _fader.FadeToBlack(2f, FinishedFadingFromBlack);
+        
 
     }
     private void FinishedFadingFromBlack()
     {
+        TeleportPlayer();
         _fader.FadeFromBlack(3f, null);
         
     }
