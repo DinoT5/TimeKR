@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class HandleTurn 
 {
-    public string Attacker;
+    public GameObject Attacker;
     public string Type;
     public GameObject AttackersGameObject;
     public GameObject AttackersTarget;

@@ -2,32 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SelectionForcer : MonoBehaviour
 {
-    private GameObject _previousSelection;
-
+        [SerializeField] private Button _previousSelection;
         public GameObject defaultSelectedObject; 
 
     void Start()
     {
-        if (defaultSelectedObject != null)
-        {
-            EventSystem.current.SetSelectedGameObject(defaultSelectedObject);
-        }
+        _previousSelection.Select();
     }
 
     private void Update()
     {
-        var currentSelection = EventSystem.current.currentSelectedGameObject;
-        if (currentSelection != null)
-        {
-            _previousSelection = currentSelection;
-        }
-
-        if (currentSelection == null)
-        {
-            EventSystem.current.SetSelectedGameObject(_previousSelection);
-        }
+    
     }
 }

@@ -17,7 +17,6 @@ public class EventBus : MonoBehaviour
 
     public event Action<ItemData> onItemUsed; 
 
-    public event Action<ItemData> onItemDropped;
 
 
     public void OpenInventory()

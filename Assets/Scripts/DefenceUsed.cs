@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemGive : MonoBehaviour
+public class DefenceUsed : MonoBehaviour
 {
-
     [SerializeField] private ItemData _requiredItem;
-    [SerializeField] private ItemData itemData;
-
     private void OnEnable()
     {
         EventBus.Instance.onItemUsed += OnItemUsed;
@@ -19,7 +16,6 @@ public class ItemGive : MonoBehaviour
         EventBus.Instance.onItemUsed -= OnItemUsed;
 
     }
-
     private void OnItemUsed(ItemData item)
     {
 
@@ -28,12 +24,20 @@ public class ItemGive : MonoBehaviour
 
             if (item == _requiredItem)
             {
-                
-                EventBus.Instance.PickUpItem(itemData);
-                _requiredItem = null;
-
+                if (PlayerPrefs.HasKey("EnemiesSpawned"))
+                {
+                    PlayerPrefs.SetInt("EnemiesSpawned",PlayerPrefs.GetInt("EnemiesSpawned") -1);
+                }
+                else
+                {
+                PlayerPrefs.SetInt("EnemiesSpawned",8);
+                }
+                InventoryView.Instance.CloseInventory();
+                if (item.DestroyAfterUse)
+                {
+                    InventoryView.Instance.GetSelectedSlot().itemData = null;
+                }
             }
         }
     }
-
 }

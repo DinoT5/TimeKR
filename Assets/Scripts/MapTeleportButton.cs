@@ -12,7 +12,6 @@ public class MapTeleportButton : CurrencyDependent
     [SerializeField] private int TravelCost;
     [SerializeField] private CurrencyUICounter CostCounter;
 
-
     public Transform Player;
 
     private void Awake()
@@ -31,11 +30,10 @@ public class MapTeleportButton : CurrencyDependent
     {
         if (_TotalCurrency >= TravelCost)
         {
-            Actions.OrderCurrencyUpdate.InvokeAction(-TravelCost);
-            Player.gameObject.transform.position = teleportLocation;
-
-            _fader.FadeFromBlack(4f, FinishedFadingFromBlack);
             MapPanel.SetActive(false);
+            _fader.FadeToBlack(4f, FinishedFadingToBlack);
+
+
         }
         else
         {
@@ -69,7 +67,15 @@ public class MapTeleportButton : CurrencyDependent
     private void FinishedFadingFromBlack()
     {
         MapPanel.SetActive(false);
+
         _fader.FadeFromBlack(4f, null);
+    }
+    private void FinishedFadingToBlack()
+    {
+        Actions.OrderCurrencyUpdate.InvokeAction(-TravelCost);
+        Player.gameObject.transform.position = teleportLocation;
+        
+        _fader.FadeToBlack(2f, FinishedFadingFromBlack);
 
 
     }

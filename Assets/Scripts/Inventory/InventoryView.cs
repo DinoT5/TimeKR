@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class InventoryView : MonoBehaviour
 {
+    public static InventoryView Instance;
     [SerializeField] private TMP_Text _itemNameText;
     [SerializeField] private TMP_Text _itemDescriptionText;
     [SerializeField] private GameObject _inventoryViewObject;
@@ -23,10 +24,21 @@ public class InventoryView : MonoBehaviour
     [SerializeField] private GameObject _firstContextMenuOption;
 
     [SerializeField] private List<Button> _contextMenuIgnore;
-
+    
+    
+    public ItemSlot GetSelectedSlot()
+    {
+        return _currentSlot;
+    }
 
     private void Start()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+
+
         _slots[0].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[0]);
         _slots[1].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[1]);
         _slots[2].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[2]);
@@ -42,7 +54,7 @@ public class InventoryView : MonoBehaviour
                     _slots[i].GetComponent<Button>().onClick.AddListener(() => _currentSlot = _slots[i]);
                 }*/
     }
-    private enum State
+    public enum State
     {
         menuClosed,
 
@@ -50,21 +62,23 @@ public class InventoryView : MonoBehaviour
 
         contextMenu,
     }
-    private State _state;
+    public State state;
 
     public void UseItem()
     {
-        Debug.Log(_currentSlot);
-        _fader.FadeFromBlack(1f,FadeToUseItemCallback);
+        ContextMenuClose();
+        EventBus.Instance.UseItem(_currentSlot.itemData);
+        //_fader.FadeFromBlack(1f,FadeToUseItemCallback);
 
     }
 
+
     private void FadeToUseItemCallback()
     {
-        _contextMenuObject.SetActive(false);
+
         //_inventoryViewObject.SetActive(false);
-        _fader.FadeFromBlack(1f, () => EventBus.Instance.UseItem(_currentSlot.itemData));
-        //_state = State.menuClosed;
+        //_fader.FadeFromBlack(1f, () => EventBus.Instance.UseItem(_currentSlot.itemData));
+        //state = State.menuClosed;
     }
 
     private void OnEnable()
@@ -106,39 +120,29 @@ public class InventoryView : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (_state == State.menuClosed)
+            if (state == State.menuClosed)
             {
-                EventBus.Instance.PauseGameplay();
-                _inventoryViewObject.SetActive(true);
-                _state = State.menuOpen;
+                OpenInventory();
             }
-            else if (_state == State.menuOpen)
+            else if (state == State.menuOpen)
             {
-                EventBus.Instance.ResumeGameplay();
-                _inventoryViewObject.SetActive(false);
-                _state = State.menuClosed;
+                CloseInventory();
 
             }
-            else if (_state == State.contextMenu)
+            else if (state == State.contextMenu)
             {
-                _contextMenuObject.SetActive(false);
-                foreach (var button in _contextMenuIgnore)
-                {
-                    button.interactable = true;
-                }
-                EventSystem.current.SetSelectedGameObject(_currentSlot.gameObject);
-                _state = State.menuOpen;
+                ContextMenuClose();
             }
 
         }
         //context menu
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (_state == State.menuOpen)
+            if (state == State.menuOpen)
             {
                 if (EventSystem.current.currentSelectedGameObject.TryGetComponent<ItemSlot>(out var slot))
                 {
-                    _state = State.contextMenu;
+                    state = State.contextMenu;
                     _contextMenuObject.SetActive(true);
                     EventSystem.current.SetSelectedGameObject(_firstContextMenuOption);
                     foreach (var button in _contextMenuIgnore)
@@ -152,4 +156,28 @@ public class InventoryView : MonoBehaviour
 
     }
 
+    private void ContextMenuClose()
+    {
+        _contextMenuObject.SetActive(false);
+        foreach (var button in _contextMenuIgnore)
+        {
+            button.interactable = true;
+        }
+        EventSystem.current.SetSelectedGameObject(_currentSlot.gameObject);
+        state = State.menuOpen;
+    }
+
+    public void CloseInventory()
+    {
+        EventBus.Instance.ResumeGameplay();
+        _inventoryViewObject.SetActive(false);
+        state = State.menuClosed;
+    }
+
+    private void OpenInventory()
+    {
+        EventBus.Instance.PauseGameplay();
+        _inventoryViewObject.SetActive(true);
+        state = State.menuOpen;
+    }
 }

@@ -30,9 +30,14 @@ public class DialoguePrinter : MonoBehaviour
 
             yield return new WaitForSeconds(charSpeed);
         }
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
+        _dialogueTextMesh.SetText(string.Empty);
         finishedCallback?.Invoke();
         _itemUsePanel.SetActive(false);
+
+        EventBus.Instance.ResumeGameplay();
         yield return null;
+
     }
     void Awake()
     {

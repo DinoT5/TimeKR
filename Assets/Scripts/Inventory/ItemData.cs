@@ -10,8 +10,10 @@ public class ItemData : ScriptableObject
     public string Name => _name;
     public List<string> Description => _description;
     public Image Sprite => _sprite;
+    public bool DestroyAfterUse => _destroyAfterUse;
 
     [SerializeField] private string _name;
     [SerializeField] private List<string> _description;
     [SerializeField] private Image _sprite;
+    [SerializeField] private bool _destroyAfterUse;
 }

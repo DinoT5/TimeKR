@@ -78,7 +78,7 @@ public class BattleStateMachine : MonoBehaviour
                 }
             break;
             case(PerformAction.TAKEACTON):
-                GameObject performer = GameObject.Find(PerformList[0].Attacker);
+                GameObject performer = PerformList[0].Attacker;
                 if (PerformList[0].Type == "Enemy")
                 {
                     EnemyStateMachine ESM = performer.GetComponent<EnemyStateMachine>();
@@ -195,7 +195,7 @@ public class BattleStateMachine : MonoBehaviour
     }
     public void Input1()
     {
-        HeroChoice.Attacker = HerosToManage[0].name;
+        HeroChoice.Attacker = HerosToManage[0];
         HeroChoice.AttackersGameObject = HerosToManage[0];
         HeroChoice.Type = "Hero";
         HeroChoice.choosenAttack = HerosToManage[0].GetComponent<DanteStateMachine>().hero.attacks[0];
@@ -261,7 +261,7 @@ public class BattleStateMachine : MonoBehaviour
     }
     public void Input4(BaseAttack choosenMagic)
     {
-        HeroChoice.Attacker = HerosToManage[0].name;
+        HeroChoice.Attacker = HerosToManage[0];
         HeroChoice.AttackersGameObject = HerosToManage[0];
         HeroChoice.Type = "Hero";
 

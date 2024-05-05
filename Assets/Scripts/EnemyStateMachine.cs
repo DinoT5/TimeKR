@@ -104,7 +104,7 @@ public class EnemyStateMachine : MonoBehaviour
         void ChooseAction()
     {
         HandleTurn myAttack = new HandleTurn();
-        myAttack.Attacker = enemy.theName;
+        myAttack.Attacker = enemy.gameObject;
         myAttack.Type = "Enemy";
         myAttack.AttackersGameObject = this.gameObject;
         myAttack.AttackersTarget = BSM.HerosInBattle[Random.Range(0, BSM.HerosInBattle.Count)];

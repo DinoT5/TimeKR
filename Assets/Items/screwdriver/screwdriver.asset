@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: screwdriver
   _description: []
   _sprite: {fileID: 1137649883667942241, guid: fded234b9312243418649f7fb6b4d5ab, type: 3}
+  _destroyAfterUse: 1

@@ -10,6 +10,8 @@ public class StartDoorInteraction : MonoBehaviour
     [SerializeField] private Transform _teleportDestination;
     [SerializeField] private ScreenFader _fader;
 
+
+
     private void Awake()
     {
         
@@ -34,8 +36,9 @@ public class StartDoorInteraction : MonoBehaviour
 
             if (item == _requiredItem)
             {
-
-                DialoguePrinter.Instance.PrintDialogueLine("You used the Axe on the Door", 0.06f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
+                InventoryView.Instance.CloseInventory();
+                Actions.OrderCurrencyUpdate.InvokeAction(-1);
+                DialoguePrinter.Instance.PrintDialogueLine("You used the Axe", 0.06f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
 
 
             }
@@ -77,8 +80,15 @@ public class StartDoorInteraction : MonoBehaviour
     private void FinishedFadingFromBlack()
     {
         TeleportPlayer();
+
+        StartCoroutine(WaitAndFadeFromBlack());
+    }
+
+    private IEnumerator WaitAndFadeFromBlack()
+    {
+        yield return new WaitForSeconds(2);
+
         _fader.FadeFromBlack(3f, null);
-        
     }
 
 

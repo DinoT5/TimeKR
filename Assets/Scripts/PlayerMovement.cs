@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if (DialogueManager.GetInstance().dialogueIsPlaying == true || CountdownTimer.GetInstance().viewingCountdown == true)
+        if (DialogueManager.GetInstance().dialogueIsPlaying == true )
         {
             return;
         }

@@ -17,6 +17,10 @@ public class ItemPickup : MonoBehaviour
         visualCue.SetActive(true);
         if (Input.GetKey(KeyCode.E))
         {
+            if (InventoryView.Instance.state == InventoryView.State.menuOpen)
+            {
+                return;
+            }
             EventBus.Instance.PickUpItem(itemData);
             Destroy(gameObject);
         }

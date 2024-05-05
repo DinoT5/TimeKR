@@ -11,11 +11,14 @@ public class CountdownTimer : MonoBehaviour
     [SerializeField] float remainingTime;
     [SerializeField] private GameObject countdownPanel;
     private static CountdownTimer instance;
+    private Animator countdownAnimator;
+    private bool isTabPressed = false;
     public bool viewingCountdown { get; private set; }
 
     private void Awake()
     {
         instance = this;
+        countdownAnimator = countdownPanel.GetComponent<Animator>();
         viewingCountdown = false;
     }
     public static CountdownTimer GetInstance()
@@ -24,23 +27,33 @@ public class CountdownTimer : MonoBehaviour
     }
     private void Start()
     {
-        countdownPanel.SetActive(false);
+        //countdownPanel.SetActive(false);
     }
 
     void Update()
     {
-        remainingTime -= Time.deltaTime;
-        int minutes = Mathf.FloorToInt(remainingTime / 60);
-        int seconds = Mathf.FloorToInt(remainingTime % 60);
-        countdownText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            countdownPanel.SetActive(true);
-            viewingCountdown = true;
+            
+            isTabPressed = true;
+
         }
         else if (Input.GetKeyUp(KeyCode.Tab))
         {
+            
+            isTabPressed = false;
+        }
+        if (isTabPressed)
+        {
+            countdownPanel.SetActive(true);
+            countdownAnimator.SetBool("ShowCountdown", true);
+            viewingCountdown = true;
+        }
+        else if (isTabPressed == false)
+        {
             countdownPanel.SetActive(false);
+            countdownAnimator.SetBool("ShowCountdown", false);
             viewingCountdown = false;
         }
 

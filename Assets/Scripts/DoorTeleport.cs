@@ -62,8 +62,14 @@ public class DoorTeleport : MonoBehaviour
     private void FinishedFadingFromBlack()
     {
         TeleportPlayer();
-        _fader.FadeFromBlack(2f, null);
+        StartCoroutine(WaitAndFadeFromBlack());
+    }
 
+    private IEnumerator WaitAndFadeFromBlack()
+    {
+        yield return new WaitForSeconds(2);
+
+        _fader.FadeFromBlack(1f, null);
     }
     private void OnTriggerExit(Collider other)
     {
