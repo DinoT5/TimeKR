@@ -1,1 +1,1 @@
-﻿{"inkVersion":21,"root":[["^The door seems to be locked,I should look somewhere else ","#","^speaker:Dantes ","/#","#","^portrait:dantes_neutral ","/#","#","^layout:left","/#","\n",["done",{"#f":5,"#n":"g-0"}],null],"done",{"#f":1}],"listDefs":{}}
+﻿{"inkVersion":21,"root":[["^The door seems to be locked,I should look somewhere else ","#","^speaker:??? ","/#","#","^portrait:dantes_neutral ","/#","#","^layout:left","/#","\n",["done",{"#f":5,"#n":"g-0"}],null],"done",{"#f":1}],"listDefs":{}}

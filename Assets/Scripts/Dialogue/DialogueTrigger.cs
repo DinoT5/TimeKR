@@ -7,22 +7,34 @@ public class DialogueTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject visualCue;
     [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private TextAsset secondInkJSON;
     private bool playerInRange;
+    private bool firstStoryEnd;
 
     private void Awake()
     {
         playerInRange = false;
         visualCue.SetActive(false);
+        //firstStoryEnd = false;
     }
     private void Update()
     {
         if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
+           
             visualCue.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
+                if (firstStoryEnd == true)
+                {
+                    OnFirstStoryEnd();
+                }
+                else
+                {
 
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                    DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                    firstStoryEnd = true;
+                }
             }
         }
         else
@@ -44,5 +56,9 @@ public class DialogueTrigger : MonoBehaviour
         {
             playerInRange = false;
         }
+    }
+    public void OnFirstStoryEnd()
+    {
+        DialogueManager.GetInstance().EnterDialogueMode(secondInkJSON);
     }
 }

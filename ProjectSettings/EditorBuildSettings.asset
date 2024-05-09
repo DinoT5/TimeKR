@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Battle Mode.unity
     guid: 69cb9130c291a784f97d4ca27884c6d2
+  - enabled: 1
+    path: Assets/Scenes/Won_NoCure.unity
+    guid: edee12c10cfbe4e469e6f60423cf76b1
+  - enabled: 1
+    path: Assets/Scenes/Won_WithCure.unity
+    guid: 3eaf8bf4d3250e646b1452951af934ec
+  - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: e5fe8da4c0b9b5e4687904c2df7c7071
   m_configObjects: {}

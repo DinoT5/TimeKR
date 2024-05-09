@@ -9,6 +9,8 @@ public class EnemyStateMachine : MonoBehaviour
 {
     private BattleStateMachine BSM;
     public BattleEnemy enemy;
+    private Animator enemyAnimator;
+
     public enum TurnState
     {
         PROCESSING,
@@ -35,6 +37,8 @@ public class EnemyStateMachine : MonoBehaviour
     void Start()
     {
         currentState = TurnState.PROCESSING;
+        enemyAnimator = GetComponent<Animator>();
+
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         startposition = transform.position;
     }
@@ -69,6 +73,7 @@ public class EnemyStateMachine : MonoBehaviour
                 {
                     this.gameObject.tag = "DeadEnemy";
                     BSM.EnemysInBattle.Remove(this.gameObject);
+                    enemyAnimator.SetBool("ZombieDeath", true);
 
                     if (BSM.EnemysInBattle.Count > 0)
                     {
@@ -82,13 +87,14 @@ public class EnemyStateMachine : MonoBehaviour
                             {
                                 BSM.PerformList[i].AttackersTarget = BSM.EnemysInBattle[Random.Range(0, BSM.EnemysInBattle.Count)];
                             }
-                        }
-                        this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
-                        alive = false;
-                        BSM.EnemyButtons();
-
-                        BSM.battleStates = BattleStateMachine.PerformAction.CHECKALIVE;
+                      }
+                        
                     }
+                    this.gameObject.GetComponent<SpriteRenderer>().material.color = new Color32(105, 105, 105, 255);
+                    //ADD DEAD ANIM
+                    alive = false;
+                    BSM.EnemyButtons();
+                    BSM.battleStates = BattleStateMachine.PerformAction.CHECKALIVE;
                 }
                 break;
         }
@@ -125,12 +131,13 @@ public class EnemyStateMachine : MonoBehaviour
         }
         actionStarted = true;
         //enemy animation
-
         Vector3 heroPosition = new Vector3(HeroToAttack.transform.position.x + 1f,transform.position.y, HeroToAttack.transform.position.z);
         while (MoveTowardsEnemy(heroPosition)) {yield return null;}
+        enemyAnimator.SetBool("ZombieAttack", true);
+        yield return new WaitForSeconds(1f);
 
-        yield return new WaitForSeconds(0.5f);
         DoDamage();
+        enemyAnimator.SetBool("ZombieAttack", false);
 
         Vector3 firstPosition = startposition;
         while (MoveTowardsEnemy(firstPosition)) { yield return null; }

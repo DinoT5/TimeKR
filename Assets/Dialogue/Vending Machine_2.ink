@@ -1,0 +1,1 @@
+I should find something that could help me get that stick.#speaker:Idon #portrait:dantes_neutral #layout:left

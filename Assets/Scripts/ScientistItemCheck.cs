@@ -14,15 +14,21 @@ public class ScientistItemCheck : MonoBehaviour
     [SerializeField] private TextAsset inkJSON_tweezers;
     [SerializeField] private TextAsset inkJSON_garlic;
 
+    [SerializeField] private bool alcoholCheck;
+    [SerializeField] private bool drugCheck;
+    [SerializeField] private bool tweezersCheck;
+    [SerializeField] private bool garlicCheck;
 
-    void Start()
+
+    private void OnEnable()
     {
-
+        EventBus.Instance.onItemUsed += OnItemUsed;
     }
 
     // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
+        EventBus.Instance.onItemUsed -= OnItemUsed;
 
     }
     private void OnItemUsed(ItemData item)
@@ -34,22 +40,54 @@ public class ScientistItemCheck : MonoBehaviour
             if (item == Alcohol)
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_alcohol);
+                alcoholCheck = true;
+                if (item.DestroyAfterUse)
+                {
+                    InventoryView.Instance.GetSelectedSlot().itemData = null;
+                }
+
             }
             else if (item == Drugs)
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_drugs);
-
+                drugCheck = true;
+                if (item.DestroyAfterUse)
+                {
+                    InventoryView.Instance.GetSelectedSlot().itemData = null;
+                }
             }
             else if (item == Tweezers)
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_tweezers);
+                tweezersCheck = true;
+                if (item.DestroyAfterUse)
+                {
+                    InventoryView.Instance.GetSelectedSlot().itemData = null;
+                }
 
             }
             else if (item == WildGarlic)
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_garlic);
+                garlicCheck = true;
+                if (item.DestroyAfterUse)
+                {
+                    InventoryView.Instance.GetSelectedSlot().itemData = null;
+                }
             }
+            CheckCure();
         }
     }
 
+    void CheckCure()
+    {
+        if (alcoholCheck && drugCheck && garlicCheck && tweezersCheck)
+        {
+            PlayerPrefs.SetInt("Cure", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Cure", 0);
+        }
+    }
 }

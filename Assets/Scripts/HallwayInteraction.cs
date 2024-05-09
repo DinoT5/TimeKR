@@ -37,9 +37,13 @@ public class HallwayInteraction : MonoBehaviour
             if (item == _requiredItem)
             {
                 InventoryView.Instance.CloseInventory();
+                if (item.DestroyAfterUse)
+                {
+                    InventoryView.Instance.GetSelectedSlot().itemData = null;
+                }
                 _dialogueKey.enabled = false;
                 Actions.OrderCurrencyUpdate.InvokeAction(0);
-                DialoguePrinter.Instance.PrintDialogueLine("You used the Key", 0.06f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
+                DialoguePrinter.Instance.PrintDialogueLine("You used the Key on the door.", 0.06f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
 
 
             }

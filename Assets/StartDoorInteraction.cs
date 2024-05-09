@@ -38,7 +38,7 @@ public class StartDoorInteraction : MonoBehaviour
             {
                 InventoryView.Instance.CloseInventory();
                 Actions.OrderCurrencyUpdate.InvokeAction(-1);
-                DialoguePrinter.Instance.PrintDialogueLine("You used the Axe", 0.06f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
+                DialoguePrinter.Instance.PrintDialogueLine("You used the Axe on the boarded up door.", 0.08f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
 
 
             }

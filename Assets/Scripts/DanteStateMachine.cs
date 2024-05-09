@@ -105,11 +105,11 @@ public class DanteStateMachine : MonoBehaviour
                                 BSM.PerformList[i].AttackersTarget = BSM.HerosInBattle[Random.Range(0, BSM.HerosInBattle.Count)];
                             }
                         }
-                        this.gameObject.GetComponent<SpriteRenderer>().material.color = new Color32(105, 105, 105, 255);
-                        StartCoroutine(DeathWithDelay());
-                        BSM.battleStates = BattleStateMachine.PerformAction.CHECKALIVE;
-                        alive = false;
                     }
+                    this.gameObject.GetComponent<SpriteRenderer>().material.color = new Color32(105, 105, 105, 255);
+                    StartCoroutine(DeathWithDelay());
+
+                    alive = false;
                 }
                 break;
         }
@@ -117,7 +117,8 @@ public class DanteStateMachine : MonoBehaviour
     IEnumerator DeathWithDelay()
     {
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(0);
+        BSM.battleStates = BattleStateMachine.PerformAction.CHECKALIVE;
+        
     }
     void UpgradeProgressBar()
     {

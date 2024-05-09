@@ -7,6 +7,11 @@ public class ItemGive : MonoBehaviour
 
     [SerializeField] private ItemData _requiredItem;
     [SerializeField] private ItemData itemData;
+    [SerializeField] private TextAsset inkJSON_ItemGET;
+    public DialogueTrigger _dialogueKey;
+    [SerializeField] private GameObject visualCue;
+
+
 
     private void OnEnable()
     {
@@ -34,7 +39,13 @@ public class ItemGive : MonoBehaviour
                 {
                     InventoryView.Instance.GetSelectedSlot().itemData= null;
                 }
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON_ItemGET);
+                visualCue.SetActive(false);
+                _dialogueKey.enabled = false;
+
+
             }
+
         }
     }
 }

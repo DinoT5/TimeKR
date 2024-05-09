@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BattleStateMachine : MonoBehaviour
@@ -48,12 +49,16 @@ public class BattleStateMachine : MonoBehaviour
     private List<GameObject> atkBtns = new List<GameObject>();
 
     private List<GameObject> enemyBtns = new List<GameObject>();
+    public Canvas _eventCanvas;
+    public Canvas _battleCanvas;
 
 
 
 
     void Start()
     {
+
+        _eventCanvas.gameObject.SetActive(false);
         battleStates = PerformAction.WAIT;
         EnemysInBattle.AddRange (GameObject.FindGameObjectsWithTag("Enemy"));
         HerosInBattle.AddRange(GameObject.FindGameObjectsWithTag("Hero"));
@@ -113,7 +118,7 @@ public class BattleStateMachine : MonoBehaviour
             
             
                  case (PerformAction.CHECKALIVE):
-                        if (HerosInBattle.Count < 1)
+                        if (HerosInBattle.Count == 0)
                     {
                         battleStates = PerformAction.LOSE;
                     }
@@ -129,17 +134,36 @@ public class BattleStateMachine : MonoBehaviour
                 break;
             case (PerformAction.LOSE):
                 {
+                    _battleCanvas.enabled = false;
+                    _eventCanvas.gameObject.SetActive(true);
 
                 }
-            break;
+                break;
             case (PerformAction.WIN):
                 {
-                    for(int i = 0; i < HerosInBattle.Count; i++)
+                    /*for (int i = 0; i < HerosInBattle.Count; i++)
                     {
                         HerosInBattle[i].GetComponent<DanteStateMachine>().currentState = DanteStateMachine.TurnState.WAITING;
+                    }*/
+                    if (PlayerPrefs.HasKey("Cure"))
+                    {
+                        if (PlayerPrefs.GetInt("Cure") == 1)
+                        {
+                            SceneManager.LoadScene("Won_WithCure");
+                        }
+                        else
+                        {
+                            SceneManager.LoadScene("Won_NoCure");
+                        }
                     }
+                    else
+                    {
+                        SceneManager.LoadScene("Won_NoCure");
+                    }
+                    
+                    
                 }
-            break;
+                break;
         }
         switch (HeroInput)
         {
@@ -236,7 +260,7 @@ public class BattleStateMachine : MonoBehaviour
 
         GameObject MagicAttackButton = Instantiate(actionButton) as GameObject;
         TMP_Text MagicAttackButtonText = MagicAttackButton.transform.GetChild(0).GetComponent<TMP_Text>();
-        MagicAttackButtonText.text = "Magic";
+        MagicAttackButtonText.text = "Skill";
         MagicAttackButton.GetComponent<Button>().onClick.AddListener(() => Input3());
         MagicAttackButton.transform.SetParent(actionSpacer, false);
         atkBtns.Add(MagicAttackButton);

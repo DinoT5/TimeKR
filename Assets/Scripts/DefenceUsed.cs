@@ -5,6 +5,9 @@ using UnityEngine;
 public class DefenceUsed : MonoBehaviour
 {
     [SerializeField] private ItemData _requiredItem;
+    [SerializeField] private TextAsset inkJSON_ItemGET;
+
+
     private void OnEnable()
     {
         EventBus.Instance.onItemUsed += OnItemUsed;
@@ -24,6 +27,8 @@ public class DefenceUsed : MonoBehaviour
 
             if (item == _requiredItem)
             {
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON_ItemGET);
+
                 if (PlayerPrefs.HasKey("EnemiesSpawned"))
                 {
                     PlayerPrefs.SetInt("EnemiesSpawned",PlayerPrefs.GetInt("EnemiesSpawned") -1);
