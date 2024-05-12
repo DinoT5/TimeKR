@@ -8,6 +8,7 @@ TagManager:
   - Hero
   - DeadHero
   - DeadEnemy
+  - SelectorViewSelectable
   layers:
   - Default
   - TransparentFX

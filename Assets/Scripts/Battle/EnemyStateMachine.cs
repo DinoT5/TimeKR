@@ -65,6 +65,30 @@ public class EnemyStateMachine : MonoBehaviour
 
 
             case (TurnState.ACTION):
+                if (!alive)
+                {
+                    if (BSM.EnemysInBattle.Count > 0)
+                    {
+                        for (int i = 0; i < BSM.PerformList.Count; i++)
+                        {
+                            //if (i != 0)
+                            //{
+
+                            if (BSM.PerformList[i].AttackersGameObject == this.gameObject)
+                            {
+                                BSM.PerformList.Remove(BSM.PerformList[i]);
+                            }
+                            else if (BSM.PerformList[i].AttackersTarget == this.gameObject)
+                            {
+                                BSM.PerformList[i].AttackersTarget = BSM.EnemysInBattle[Random.Range(0, BSM.EnemysInBattle.Count)];
+                            }
+                            //}
+                        }
+
+                    }
+                    currentState = TurnState.DEAD;
+                    return;
+                }
                 StartCoroutine(TimeForAction());
                 break;
 
@@ -83,10 +107,10 @@ public class EnemyStateMachine : MonoBehaviour
 
                     if (BSM.EnemysInBattle.Count > 0)
                     {
-                        for (int i = 0; i < BSM.EnemysInBattle.Count; i++)
+                        for (int i = 0; i < BSM.PerformList.Count ; i++)
                         {
-                            if (i != 0)
-                            {
+                            //if (i != 0)
+                            //{
 
                                 if (BSM.PerformList[i].AttackersGameObject == this.gameObject)
                                 {
@@ -96,7 +120,7 @@ public class EnemyStateMachine : MonoBehaviour
                                 {
                                     BSM.PerformList[i].AttackersTarget = BSM.EnemysInBattle[Random.Range(0, BSM.EnemysInBattle.Count)];
                                 }
-                            }
+                            //}
                         }
                         
                     }
@@ -153,8 +177,8 @@ public class EnemyStateMachine : MonoBehaviour
         Vector3 heroPosition = new Vector3(HeroToAttack.transform.position.x + 1f,transform.position.y, HeroToAttack.transform.position.z);
         while (MoveTowardsEnemy(heroPosition)) {yield return null;}
         enemyAnimator.SetBool("ZombieAttack", true);
-        SFX.clip = Hit;
-        SFX.Play();
+        //SFX.clip = Hit;
+        //SFX.Play();
         yield return new WaitForSeconds(1f);
 
         DoDamage();

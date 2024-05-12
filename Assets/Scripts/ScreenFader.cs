@@ -10,9 +10,11 @@ public class ScreenFader : MonoBehaviour
     public static ScreenFader Instance { get;private set;}
     [SerializeField]private Image _fader;
     private bool _isBusy;
+    public PlayerMovement _playerMovement;
     public void FadeToBlack(float duration, Action finishedCallback)
     {
         if (_isBusy) return;
+        _playerMovement.canMove = false;
         StartCoroutine(CO_FadeToBlack(duration,finishedCallback));
     }
     public void FadeFromBlack(float duration, Action finishedCallback)
@@ -24,7 +26,6 @@ public class ScreenFader : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
     }
     public void FadeToScene(string sceneName, float duration)
@@ -72,7 +73,7 @@ public class ScreenFader : MonoBehaviour
         _fader.color = new Color(0, 0, 0, 0);
         _isBusy = false;
         finishedCallback?.Invoke();
-
+        _playerMovement.canMove = true;
         yield return null;
     }
 

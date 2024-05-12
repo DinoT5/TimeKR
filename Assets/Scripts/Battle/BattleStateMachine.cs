@@ -56,6 +56,9 @@ public class BattleStateMachine : MonoBehaviour
     public AudioSource sfx;
     public AudioClip _loseGame;
 
+    public int magicAttackCounter;
+    public int magicAttacksAvailable = 1;
+
 
 
 
@@ -268,31 +271,32 @@ public class BattleStateMachine : MonoBehaviour
         AttackButton.GetComponent<Button>().onClick.AddListener(() => Input1());
         AttackButton.transform.SetParent(actionSpacer, false);
         atkBtns.Add(AttackButton);
-
-        GameObject MagicAttackButton = Instantiate(actionButton) as GameObject;
-        TMP_Text MagicAttackButtonText = MagicAttackButton.transform.GetChild(0).GetComponent<TMP_Text>();
-        MagicAttackButtonText.text = "Skill";
-        MagicAttackButton.GetComponent<Button>().onClick.AddListener(() => Input3());
-        MagicAttackButton.transform.SetParent(actionSpacer, false);
-        atkBtns.Add(MagicAttackButton);
-
-        if (HerosToManage[0].GetComponent<DanteStateMachine>().hero.MagicAttacks.Count > 0)
+        if (magicAttackCounter < magicAttacksAvailable)
         {
-            foreach (BaseAttack magicAtk in HerosToManage[0].GetComponent<DanteStateMachine>().hero.MagicAttacks)
+            GameObject MagicAttackButton = Instantiate(actionButton) as GameObject;
+            TMP_Text MagicAttackButtonText = MagicAttackButton.transform.GetChild(0).GetComponent<TMP_Text>();
+            MagicAttackButtonText.text = "Skill";
+            MagicAttackButton.GetComponent<Button>().onClick.AddListener(() => Input3());
+            MagicAttackButton.transform.SetParent(actionSpacer, false);
+            atkBtns.Add(MagicAttackButton);
+            if (HerosToManage[0].GetComponent<DanteStateMachine>().hero.MagicAttacks.Count > 0)
             {
-                GameObject MagicButton = Instantiate(magicButton) as GameObject;
-                TMP_Text MagicButtonText = MagicButton.transform.GetChild(0).GetComponent<TMP_Text>();
-                MagicButtonText.text = magicAtk.attackName;
-                AttackButton ATB = MagicButton.GetComponent<AttackButton>();
-                ATB.magicAttackToPerform = magicAtk;
-                MagicButton.transform.SetParent(magicSpacer, false);
-                atkBtns.Add(MagicButton);
+                foreach (BaseAttack magicAtk in HerosToManage[0].GetComponent<DanteStateMachine>().hero.MagicAttacks)
+                {
+                    GameObject MagicButton = Instantiate(magicButton) as GameObject;
+                    TMP_Text MagicButtonText = MagicButton.transform.GetChild(0).GetComponent<TMP_Text>();
+                    MagicButtonText.text = magicAtk.attackName;
+                    AttackButton ATB = MagicButton.GetComponent<AttackButton>();
+                    ATB.magicAttackToPerform = magicAtk;
+                    MagicButton.transform.SetParent(magicSpacer, false);
+                    atkBtns.Add(MagicButton);
                 
+                }
             }
-        }
-        else
-        {
-            MagicAttackButton.GetComponent<Button>().interactable = false;
+            else
+            {
+                MagicAttackButton.GetComponent<Button>().interactable = false;
+            }
         }
     }
     public void Input4(BaseAttack choosenMagic)
@@ -305,6 +309,10 @@ public class BattleStateMachine : MonoBehaviour
         
         MagicPanel.SetActive(false);
         EnemySelectPanel.SetActive(true);
+        magicAttackCounter++;
+        DanteStateMachine dante = HerosToManage[0].GetComponent<DanteStateMachine>();
+        dante.hero.curMP = dante.hero.baseMP - dante.hero.baseMP * ((float)magicAttackCounter/magicAttacksAvailable);
+        dante.UpdateHeroPanel();
     }
     public void Input3()
     {

@@ -1,37 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Footsteps : MonoBehaviour
 {
+    public static Footsteps instance;
+    public AudioSource audioS;
+    public List<AudioClip> concreteFootsteps;
 
-    CharacterController cc;
-    AudioSource audioS;
 
-
-    private void Start()
+    private void Awake()
     {
-        cc = GetComponent<CharacterController>();
-        audioS = GetComponent<AudioSource>();
-
+        instance = this;
     }
-
-    void Update()
+    public void PlayFootstep() 
     {
-        if (cc.isGrounded == true && cc.velocity.magnitude > 2f && audioS.isPlaying == false)
-        {
-
-        }
-
-        if (cc.isGrounded && audioS.isPlaying == false)
-
-        {
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
-                audioS.Play();
-
-            audioS.volume = Random.Range(0.8f, 1);
-            audioS.pitch = Random.Range(0.8f, 1.1f);
-        }
+        int randomNum = Random.Range (0, concreteFootsteps.Count);
+        audioS.PlayOneShot(concreteFootsteps[randomNum]);
     }
-
 }

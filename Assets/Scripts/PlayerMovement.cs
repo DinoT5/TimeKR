@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Vertical", movement.z);
         animator.SetFloat("Speed", movement.sqrMagnitude);
 
-        if (canMove == false)
+        if (canMove == false || DialogueManager.GetInstance().dialogueIsPlaying == true)
         {
             animator.SetFloat("Speed", 0f);
         }

@@ -8,12 +8,16 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private List<BattleEnemy> _battleEnemies = new List<BattleEnemy>();
     [SerializeField] private List<Transform> _enemyPositions = new List<Transform>();
     [SerializeField] private int _enemiesToSpawn = 3;
+    [SerializeField] private bool useSavedData;
 
 
 
     private void Awake()
     {
+        if (useSavedData )
+        {
         _enemiesToSpawn = PlayerPrefs.GetInt("EnemiesSpawned");
+        }
         SpawnEnemies();
     }
 

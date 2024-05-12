@@ -91,7 +91,7 @@ public class StartDoorInteraction : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
-        _fader.FadeFromBlack(3f, null);
+        _fader.FadeFromBlack(1f, null);
     }
 
 

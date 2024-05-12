@@ -220,10 +220,10 @@ public class DanteStateMachine : MonoBehaviour
         ProgressBar = stats.ProgressBar;
         HeroPanel.transform.SetParent(HeroPanelSpacer, false);
     }
-    void UpdateHeroPanel()
+    public void UpdateHeroPanel()
     {
-        stats.HeroHP.text = "HP" + hero.curHP;
-        stats.HeroMP.text = "SP" + hero.curMP;
+        stats.HeroHP.text = "HP: " + hero.curHP;
+        stats.HeroMP.text = "SP: " + hero.curMP;
     }
 
 

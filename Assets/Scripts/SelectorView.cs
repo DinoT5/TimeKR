@@ -8,6 +8,7 @@ public class SelectorView : MonoBehaviour
     [SerializeField] private float _speed = 25f;
     private RectTransform _rectTransform;
     private GameObject _selected;
+    public GameObject _defaultSelected;
     
     void Awake()
     {
@@ -19,7 +20,19 @@ public class SelectorView : MonoBehaviour
     {
         var selectedGameObject = EventSystem.current.currentSelectedGameObject;
 
-        _selected = (selectedGameObject == null) ? _selected : selectedGameObject;
+        if ((selectedGameObject == null || !selectedGameObject.CompareTag("SelectorViewSelectable")))
+        {
+            _selected = _selected;
+        
+        }
+        else if (!selectedGameObject.activeInHierarchy)
+        {
+            _selected = _defaultSelected;
+        }
+        else
+        {
+            _selected = selectedGameObject;
+        }
 
         EventSystem.current.SetSelectedGameObject(_selected);
         

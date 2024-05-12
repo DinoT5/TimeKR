@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SelectionForcer : MonoBehaviour
 {
         [SerializeField] private Button _previousSelection;
-        public GameObject defaultSelectedObject; 
+        //public GameObject defaultSelectedObject; 
 
 
     void Start()

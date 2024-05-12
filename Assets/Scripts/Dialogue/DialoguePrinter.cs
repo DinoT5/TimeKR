@@ -18,6 +18,7 @@ public class DialoguePrinter : MonoBehaviour
     {
         _currentDialogueTextMesh = _dialogueTextMesh;
         _itemUsePanel.SetActive(true);
+        EventBus.Instance.PauseGameplay();
         StartCoroutine(CO_PrintDialogueLine(lineToPrint, charSpeed, finishedCallback));
     }
     public void PrintTimerRunOutLine(string lineToPrint, float charSpeed, Action finishedCallback)

@@ -24,11 +24,16 @@ public class DefenceUsed : MonoBehaviour
     private void OnItemUsed(ItemData item)
     {
 
-        if (Vector3.Distance(PlayerMovement.Instance.transform.position, transform.position) < 3)
+        if (Vector3.Distance(PlayerMovement.Instance.transform.position, transform.position) < 8)
         {
 
             if (item == _requiredItem)
             {
+                InventoryView.Instance.CloseInventory();
+                if (item.DestroyAfterUse)
+                {
+                    InventoryView.Instance.GetSelectedSlot().itemData = null;
+                }
                 src.clip = _defenseUsed;
                 src.Play();
                 Actions.OrderCurrencyUpdate.InvokeAction(-5);
@@ -44,11 +49,7 @@ public class DefenceUsed : MonoBehaviour
                 }
                 
 
-                InventoryView.Instance.CloseInventory();
-                if (item.DestroyAfterUse)
-                {
-                    InventoryView.Instance.GetSelectedSlot().itemData = null;
-                }
+                
             }
         }
     }
