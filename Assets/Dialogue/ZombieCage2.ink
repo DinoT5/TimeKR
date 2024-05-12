@@ -1,1 +1,1 @@
-I need to find something to fish out the canister with # speaker:Idon, portrait:dantes_neutral, layout:left
+I need to find something to fish out the canister with #speaker:Idon #portrait:dantes_neutral #layout:left

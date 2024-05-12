@@ -10,6 +10,9 @@ public class ItemGive : MonoBehaviour
     [SerializeField] private TextAsset inkJSON_ItemGET;
     public DialogueTrigger _dialogueKey;
     [SerializeField] private GameObject visualCue;
+    public AudioSource src;
+    public AudioClip _itemUsed;
+
 
 
 
@@ -28,7 +31,7 @@ public class ItemGive : MonoBehaviour
     private void OnItemUsed(ItemData item)
     {
 
-        if (Vector3.Distance(PlayerMovement.Instance.transform.position, transform.position) < 3)
+        if (Vector3.Distance(PlayerMovement.Instance.transform.position, transform.position) < 6)
         {
 
             if (item == _requiredItem)
@@ -39,6 +42,8 @@ public class ItemGive : MonoBehaviour
                 {
                     InventoryView.Instance.GetSelectedSlot().itemData= null;
                 }
+                src.clip = _itemUsed;
+                src.Play();
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_ItemGET);
                 visualCue.SetActive(false);
                 _dialogueKey.enabled = false;

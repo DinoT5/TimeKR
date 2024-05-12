@@ -6,6 +6,8 @@ public class ItemPickup : MonoBehaviour
 {
     [SerializeField] private ItemData itemData;
      public GameObject visualCue;
+    public AudioSource sfx;
+    public AudioClip _itemPickedUp;
 
     private void Start()
     {
@@ -21,6 +23,8 @@ public class ItemPickup : MonoBehaviour
             {
                 return;
             }
+            sfx.clip = _itemPickedUp;
+            sfx.Play();
             EventBus.Instance.PickUpItem(itemData);
             Destroy(gameObject);
         }

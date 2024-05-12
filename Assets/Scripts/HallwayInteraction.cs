@@ -9,6 +9,9 @@ public class HallwayInteraction : MonoBehaviour
     [SerializeField] private ItemData _requiredItem;
     [SerializeField] private Transform _teleportDestination;
     [SerializeField] private ScreenFader _fader;
+    public AudioSource src;
+    public AudioClip _doorEnter;
+
 
     public DialogueTrigger _dialogueKey;
 
@@ -43,7 +46,7 @@ public class HallwayInteraction : MonoBehaviour
                 }
                 _dialogueKey.enabled = false;
                 Actions.OrderCurrencyUpdate.InvokeAction(0);
-                DialoguePrinter.Instance.PrintDialogueLine("You used the Key on the door.", 0.06f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
+                DialoguePrinter.Instance.PrintDialogueLine("You used the Key on the door.", 0.04f, () => _fader.FadeToBlack(1f, FinishedFadingToBlack));
 
 
             }
@@ -78,6 +81,8 @@ public class HallwayInteraction : MonoBehaviour
     }
     private void FinishedFadingToBlack()
     {
+        src.clip = _doorEnter;
+        src.Play();
         _fader.FadeToBlack(2f, FinishedFadingFromBlack);
 
 

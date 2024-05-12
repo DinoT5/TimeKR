@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: CarJumper
   _description: []
   _sprite: {fileID: 5839242699770071139, guid: 7a180fa7cf7772e4a981b9ac800cccec, type: 3}
+  _destroyAfterUse: 1

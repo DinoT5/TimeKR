@@ -8,7 +8,8 @@ public class DoorTeleport : MonoBehaviour
     [SerializeField] private Transform _teleportDestination;
     [SerializeField] private ScreenFader _fader;
     public GameObject visualCue;
-
+    public AudioSource src;
+    public AudioClip _doorEnter;
     void Start()
     {
         visualCue.SetActive(false);
@@ -55,6 +56,8 @@ public class DoorTeleport : MonoBehaviour
     }
     private void FinishedFadingToBlack()
     {
+        src.clip = _doorEnter;
+        src.Play();
         _fader.FadeToBlack(2f, FinishedFadingFromBlack);
         
 

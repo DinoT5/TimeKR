@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: alcohol
   _description: []
   _sprite: {fileID: 3950017356596566907, guid: ec2088e08faeafa4d873495ac66c874b, type: 3}
+  _destroyAfterUse: 1

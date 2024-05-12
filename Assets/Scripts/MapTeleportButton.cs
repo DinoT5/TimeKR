@@ -14,6 +14,8 @@ public class MapTeleportButton : CurrencyDependent
     [SerializeField] private int TravelCost;
     [SerializeField] private CurrencyUICounter CostCounter;
     [SerializeField] private CinemachineVirtualCamera _vCam;
+    public AudioSource src;
+    public AudioClip sfx1, sfx2, sfx3;
 
     public Transform Player;
 
@@ -140,6 +142,21 @@ public class MapTeleportButton : CurrencyDependent
         {
             Debug.LogError("Teleport destination not set.");
         }
+    }
+    public void PharmacySound()
+    {
+        src.clip = sfx1;
+        src.Play();
+    }
+    public void CarAreaSound()
+    {
+        src.clip = sfx2;
+        src.Play();
+    }
+    public void ShopSound()
+    {
+        src.clip = sfx3;
+        src.Play();
     }
 
 }

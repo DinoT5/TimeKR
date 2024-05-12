@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScreenFader : MonoBehaviour
@@ -23,7 +24,27 @@ public class ScreenFader : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+
     }
+    public void FadeToScene(string sceneName, float duration)
+    {
+        if (_isBusy) return;
+        StartCoroutine(CO_FadeToScene(sceneName, duration));
+    }
+    private IEnumerator CO_FadeToScene(string sceneName, float duration)
+    {
+        _isBusy = true;
+
+        yield return StartCoroutine(CO_FadeToBlack(duration, null));
+
+        SceneManager.LoadScene(sceneName);
+
+        yield return StartCoroutine(CO_FadeFromBlack(duration, null)); // No callback needed here
+
+        _isBusy = false;
+    }
+
 
     private IEnumerator CO_FadeToBlack(float duration, Action finishedCallback)
     {
@@ -51,6 +72,8 @@ public class ScreenFader : MonoBehaviour
         _fader.color = new Color(0, 0, 0, 0);
         _isBusy = false;
         finishedCallback?.Invoke();
+
         yield return null;
     }
+
 }

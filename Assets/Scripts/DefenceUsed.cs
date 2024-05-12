@@ -6,6 +6,8 @@ public class DefenceUsed : MonoBehaviour
 {
     [SerializeField] private ItemData _requiredItem;
     [SerializeField] private TextAsset inkJSON_ItemGET;
+    public AudioSource src;
+    public AudioClip _defenseUsed;
 
 
     private void OnEnable()
@@ -27,6 +29,9 @@ public class DefenceUsed : MonoBehaviour
 
             if (item == _requiredItem)
             {
+                src.clip = _defenseUsed;
+                src.Play();
+                Actions.OrderCurrencyUpdate.InvokeAction(-5);
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_ItemGET);
 
                 if (PlayerPrefs.HasKey("EnemiesSpawned"))
@@ -35,8 +40,10 @@ public class DefenceUsed : MonoBehaviour
                 }
                 else
                 {
-                PlayerPrefs.SetInt("EnemiesSpawned",8);
+                PlayerPrefs.SetInt("EnemiesSpawned",6);
                 }
+                
+
                 InventoryView.Instance.CloseInventory();
                 if (item.DestroyAfterUse)
                 {

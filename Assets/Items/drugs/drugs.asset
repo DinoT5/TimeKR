@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: drugs
   _description: []
   _sprite: {fileID: 2706707306615119969, guid: e26d0b5826e1b2b43b1753fa5d7ac75b, type: 3}
+  _destroyAfterUse: 1

@@ -169,12 +169,13 @@ public class InventoryView : MonoBehaviour
 
     public void CloseInventory()
     {
+        ContextMenuClose();
         EventBus.Instance.ResumeGameplay();
         _inventoryViewObject.SetActive(false);
         state = State.menuClosed;
     }
 
-    private void OpenInventory()
+    public void OpenInventory()
     {
         EventBus.Instance.PauseGameplay();
         _inventoryViewObject.SetActive(true);

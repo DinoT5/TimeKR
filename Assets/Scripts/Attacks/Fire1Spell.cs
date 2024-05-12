@@ -6,9 +6,9 @@ public class Fire1Spell : BaseAttack
 {
     public Fire1Spell()
     {
-        attackName = "Fire 1";
-        attackDes = "Fire";
+        attackName = "Heavy Hit 1";
+        attackDes = "HeavyHit";
         attackDamage = 20f;
-        attackCost = 4f;
+        attackCost = 10f;
     }
 }

@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: Wild Garlic
   _description: []
   _sprite: {fileID: 5686607327157981730, guid: 5eda356cc8c903c4ca9ad7a05baf11bc, type: 3}
+  _destroyAfterUse: 1

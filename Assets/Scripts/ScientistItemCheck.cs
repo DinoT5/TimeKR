@@ -34,21 +34,25 @@ public class ScientistItemCheck : MonoBehaviour
     private void OnItemUsed(ItemData item)
     {
 
-        if (Vector3.Distance(PlayerMovement.Instance.transform.position, transform.position) < 3)
+        if (Vector3.Distance(PlayerMovement.Instance.transform.position, transform.position) < 14)
         {
 
             if (item == Alcohol)
             {
+                InventoryView.Instance.CloseInventory();
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_alcohol);
                 alcoholCheck = true;
+
                 if (item.DestroyAfterUse)
                 {
                     InventoryView.Instance.GetSelectedSlot().itemData = null;
                 }
 
+
             }
             else if (item == Drugs)
             {
+                InventoryView.Instance.CloseInventory();
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_drugs);
                 drugCheck = true;
                 if (item.DestroyAfterUse)
@@ -58,6 +62,7 @@ public class ScientistItemCheck : MonoBehaviour
             }
             else if (item == Tweezers)
             {
+                InventoryView.Instance.CloseInventory();
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_tweezers);
                 tweezersCheck = true;
                 if (item.DestroyAfterUse)
@@ -68,6 +73,7 @@ public class ScientistItemCheck : MonoBehaviour
             }
             else if (item == WildGarlic)
             {
+                InventoryView.Instance.CloseInventory();
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON_garlic);
                 garlicCheck = true;
                 if (item.DestroyAfterUse)

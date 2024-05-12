@@ -14,6 +14,11 @@ public class CountdownTimer : MonoBehaviour
     private Animator countdownAnimator;
     private bool isTabPressed = false;
     public bool viewingCountdown { get; private set; }
+    public AudioSource src;
+    public AudioClip _countdownSound;
+
+    private bool soundPlayed = false;
+
 
     private void Awake()
     {
@@ -32,31 +37,32 @@ public class CountdownTimer : MonoBehaviour
 
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            
-            isTabPressed = true;
+            if (!isTabPressed)
+            {
+                isTabPressed = true;
+                countdownPanel.SetActive(true);
+                countdownAnimator.SetBool("ShowCountdown", true);
+                viewingCountdown = true;
 
+                if (!soundPlayed)
+                {
+                    src.PlayOneShot(_countdownSound);
+                    soundPlayed = true;
+                }
+            }
         }
         else if (Input.GetKeyUp(KeyCode.Tab))
         {
-            
             isTabPressed = false;
-        }
-        if (isTabPressed)
-        {
-            countdownPanel.SetActive(true);
-            countdownAnimator.SetBool("ShowCountdown", true);
-            viewingCountdown = true;
-        }
-        else if (isTabPressed == false)
-        {
             countdownPanel.SetActive(false);
             countdownAnimator.SetBool("ShowCountdown", false);
             viewingCountdown = false;
-        }
+            soundPlayed = false;
 
+        }
     }
+
 
 }

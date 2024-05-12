@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: 
   _description: []
   _sprite: {fileID: 4930193614904960236, guid: b0d7223091cbf624da7e6e6c95bccedc, type: 3}
+  _destroyAfterUse: 1

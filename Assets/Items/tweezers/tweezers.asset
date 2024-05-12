@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: tweezers
   _description: []
   _sprite: {fileID: 7600964078073046379, guid: 31a96adcce8051c43a2046c65e747fd4, type: 3}
+  _destroyAfterUse: 1
